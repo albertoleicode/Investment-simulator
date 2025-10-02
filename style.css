@@ -1,0 +1,435 @@
+/* 小财神投资理财学院 - 样式文件 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.container {
+    max-width: 500px;
+    margin: 30px auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* 标题样式 */
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.8em;
+}
+
+h3 {
+    color: #4a6491;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+/* 登录区域 */
+.login-box {
+    text-align: center;
+}
+
+.login-box h3 {
+    color: #666;
+    margin-bottom: 25px;
+    font-weight: normal;
+}
+
+/* 输入框样式 */
+input, select {
+    width: 100%;
+    padding: 15px;
+    margin: 12px 0;
+    border: 2px solid #e1e8ed;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+input:focus, select:focus {
+    border-color: #4a6491;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 100, 145, 0.1);
+    transform: translateY(-2px);
+}
+
+/* 按钮样式 */
+button {
+    width: 100%;
+    padding: 15px;
+    margin: 12px 0;
+    background: linear-gradient(135deg, #4a6491, #2c3e50);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(74, 100, 145, 0.3);
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(74, 100, 145, 0.4);
+}
+
+button:active {
+    transform: translateY(-1px);
+}
+
+/* 菜单样式 */
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.menu button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px;
+    font-size: 17px;
+    text-align: left;
+}
+
+/* 概念卡片 */
+.concept-card {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 25px;
+    border-radius: 15px;
+    border-left: 6px solid #4a6491;
+    margin: 25px 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.concept-card:hover {
+    transform: translateY(-5px);
+}
+
+.concept-card h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+}
+
+.concept-card p {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* 返回按钮特殊样式 */
+button[onclick*="startLearning"] {
+    background: linear-gradient(135deg, #6c757d, #495057);
+    margin-top: 20px;
+}
+
+button[onclick*="startLearning"]:hover {
+    background: linear-gradient(135deg, #5a6268, #3d4348);
+}
+
+/* 测试题目样式 */
+.quiz-option {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.quiz-option:hover {
+    border-color: #4a6491;
+    background: #f8f9fa;
+    transform: translateX(5px);
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
+    
+    .container {
+        margin: 15px auto;
+        padding: 30px 20px;
+        border-radius: 15px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+    
+    h2 {
+        font-size: 1.5em;
+    }
+    
+    button, input, select {
+        padding: 14px;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* 图标样式 */
+.icon {
+    font-size: 1.2em;
+}
+
+/* 进度指示器 */
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 3px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(135deg, #4a6491, #2c3e50);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+/* 工具提示 */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted #666;
+    cursor: help;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background: #333;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 投资模拟样式 */
+.investment-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin: 10px 0;
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.investment-option:hover {
+    border-color: #4a6491;
+    transform: translateY(-2px);
+}
+
+.investment-option label {
+    font-weight: bold;
+    color: #2c3e50;
+    flex: 1;
+}
+
+.investment-option input {
+    width: 120px;
+    margin: 0 10px;
+    text-align: center;
+}
+
+/* 进度条样式 */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(135deg, #4a6491, #2c3e50);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* 测试题目样式增强 */
+.quiz-option {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 8px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.quiz-option:hover {
+    border-color: #4a6491;
+    background: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.quiz-option.correct {
+    border-color: #28a745;
+    background: #d4edda;
+}
+
+.quiz-option.incorrect {
+    border-color: #dc3545;
+    background: #f8d7da;
+}
+
+/* 经济周期样式 */
+.cycle-recession { background: #ffebee; border-left: 4px solid #e53935; }
+.cycle-recovery { background: #e8f5e8; border-left: 4px solid #43a047; }
+.cycle-inflation { background: #fff3cd; border-left: 4px solid #ffb300; }
+.cycle-stagflation { background: #f3e5f5; border-left: 4px solid #8e24aa; }
+
+/* 基金收益计算样式 */
+.fund-calculation {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.fund-components {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.fund-component {
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.component-dividend { background: #e3f2fd; }
+.component-eps { background: #e8f5e8; }
+.component-pe { background: #fff3cd; }
+/* 实战训练特定样式 */
+.investment-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin: 10px 0;
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.investment-option:hover {
+    border-color: #4a6491;
+    transform: translateY(-2px);
+}
+
+.investment-option label {
+    font-weight: bold;
+    color: #2c3e50;
+    flex: 1;
+}
+
+.investment-option input {
+    width: 120px;
+    margin: 0 10px;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* 经济周期颜色 */
+.cycle-recession { background: #ffebee; border-left: 4px solid #e53935; }
+.cycle-recovery { background: #e8f5e8; border-left: 4px solid #43a047; }
+.cycle-inflation { background: #fff3cd; border-left: 4px solid #ffb300; }
+.cycle-stagflation { background: #f3e5f5; border-left: 4px solid #8e24aa; }
+
+/* 进度条样式 */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(135deg, #4a6491, #2c3e50);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
