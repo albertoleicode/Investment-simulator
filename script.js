@@ -1,5 +1,75 @@
 // 小财神投资理财学院 - 交互逻辑
 
+// ==================== 版本管理和数据迁移 ====================
+const APP_VERSION = '1.1.0';
+
+// 版本检查和数据迁移
+function checkDataVersion() {
+    const storedVersion = localStorage.getItem('appVersion');
+    
+    if (storedVersion !== APP_VERSION) {
+        console.log(`检测到版本变更: ${storedVersion} -> ${APP_VERSION}`);
+        migrateUserData(storedVersion, APP_VERSION);
+        localStorage.setItem('appVersion', APP_VERSION);
+    }
+}
+
+// 数据迁移处理
+function migrateUserData(oldVersion, newVersion) {
+    console.log(`执行数据迁移: ${oldVersion || '无'} -> ${newVersion}`);
+    
+    // 根据版本号执行不同的迁移逻辑
+    if (!oldVersion) {
+        // 首次安装，初始化数据
+        initializeUserData();
+    } else if (oldVersion === '1.0.0' && newVersion === '1.1.0') {
+        // 从1.0.0升级到1.1.0的特定迁移
+        migrateFromV1ToV1_1();
+    }
+    
+    // 记录迁移历史（可选）
+    const migrationHistory = JSON.parse(localStorage.getItem('migrationHistory') || '[]');
+    migrationHistory.push({
+        from: oldVersion,
+        to: newVersion,
+        timestamp: new Date().toISOString()
+    });
+    localStorage.setItem('migrationHistory', JSON.stringify(migrationHistory));
+}
+
+// 初始化用户数据
+function initializeUserData() {
+    console.log('初始化用户数据');
+    // 确保学习进度数据结构正确
+    if (!localStorage.getItem('learningProgress')) {
+        localStorage.setItem('learningProgress', JSON.stringify({
+            completedConcepts: [],
+            quizScores: [],
+            totalStudyTime: 0
+        }));
+    }
+}
+
+// 从1.0.0到1.1.0的特定迁移
+function migrateFromV1ToV1_1() {
+    console.log('执行v1.0.0到v1.1.0迁移');
+    
+    // 迁移实战训练历史数据格式
+    const oldHistory = localStorage.getItem('simulationHistory');
+    if (oldHistory) {
+        try {
+            const historyData = JSON.parse(oldHistory);
+            // 在这里处理数据格式变化
+            localStorage.setItem('simulationHistory_v1_1', JSON.stringify(historyData));
+        } catch (e) {
+            console.error('迁移历史数据失败:', e);
+        }
+    }
+}
+
+// 应用启动时立即检查版本
+checkDataVersion();
+
 // 学习进度数据
 let learningProgress = {
     completedConcepts: [],
@@ -3056,4 +3126,5 @@ window.addEventListener('load', function() {
 // 页面关闭前保存进度
 window.addEventListener('beforeunload', function() {
     localStorage.setItem('learningProgress', JSON.stringify(learningProgress));
+
 });
