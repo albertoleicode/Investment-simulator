@@ -432,4 +432,36 @@ button[onclick*="startLearning"]:hover {
     background: linear-gradient(135deg, #4a6491, #2c3e50);
     border-radius: 4px;
     transition: width 0.3s ease;
+
+}
+
+/* 更新提示动画 */
+@keyframes slideInRight {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+}
+
+.update-notification {
+    animation: slideInRight 0.5s ease-out;
+}
+
+.update-notification.hiding {
+    animation: slideOutRight 0.5s ease-out;
 }
