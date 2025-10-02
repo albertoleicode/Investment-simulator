@@ -67,6 +67,213 @@ function migrateFromV1ToV1_1() {
     }
 }
 
+// ==================== 版本管理和数据迁移 ====================
+const APP_VERSION = '1.1.0';
+
+// 版本检查和数据迁移
+function checkDataVersion() {
+    const storedVersion = localStorage.getItem('appVersion');
+    
+    if (storedVersion !== APP_VERSION) {
+        console.log(`检测到版本变更: ${storedVersion} -> ${APP_VERSION}`);
+        migrateUserData(storedVersion, APP_VERSION);
+        localStorage.setItem('appVersion', APP_VERSION);
+        
+        // 显示版本更新提示
+        showVersionUpdateMessage(storedVersion, APP_VERSION);
+    } else {
+        // 检查是否有新功能提示
+        checkNewFeatures();
+    }
+}
+
+// 新增：显示版本更新提示
+function showVersionUpdateMessage(oldVersion, newVersion) {
+    // 延迟显示，确保页面加载完成
+    setTimeout(() => {
+        const newFeatures = getNewFeaturesByVersion(newVersion);
+        
+        const updateHTML = `
+            <div id="updateNotification" style="
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #4a6491, #2c3e50);
+                color: white;
+                padding: 20px;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                z-index: 10000;
+                max-width: 350px;
+                border-left: 5px solid #28a745;
+                animation: slideIn 0.5s ease-out;
+            ">
+                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <span style="font-size: 1.5em; margin-right: 10px;">🎉</span>
+                    <h3 style="margin: 0; color: white;">版本更新提醒</h3>
+                    <button onclick="closeUpdateNotification()" style="
+                        margin-left: auto; 
+                        background: none; 
+                        border: none; 
+                        color: white; 
+                        font-size: 1.2em; 
+                        cursor: pointer;
+                    ">×</button>
+                </div>
+                <p style="margin: 10px 0; line-height: 1.4;">小财神理财已升级到 <strong>v${newVersion}</strong></p>
+                <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px; margin: 10px 0;">
+                    <strong>新功能：</strong>
+                    <ul style="margin: 8px 0; padding-left: 20px;">
+                        ${newFeatures.map(feature => `<li>${feature}</li>`).join('')}
+                    </ul>
+                </div>
+                <button onclick="closeUpdateNotification()" style="
+                    width: 100%; 
+                    background: rgba(255,255,255,0.2); 
+                    color: white; 
+                    border: 1px solid rgba(255,255,255,0.3); 
+                    padding: 8px; 
+                    border-radius: 5px; 
+                    cursor: pointer;
+                    margin-top: 10px;
+                ">开始体验新功能</button>
+            </div>
+            <style>
+                @keyframes slideIn {
+                    from { transform: translateX(400px); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            </style>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', updateHTML);
+        
+        // 5秒后自动关闭
+        setTimeout(() => {
+            const notification = document.getElementById('updateNotification');
+            if (notification) {
+                notification.style.animation = 'slideIn 0.5s ease-out reverse';
+                setTimeout(() => notification.remove(), 500);
+            }
+        }, 8000);
+        
+    }, 1000);
+}
+
+// 新增：关闭更新提示
+function closeUpdateNotification() {
+    const notification = document.getElementById('updateNotification');
+    if (notification) {
+        notification.style.animation = 'slideIn 0.5s ease-out reverse';
+        setTimeout(() => notification.remove(), 500);
+    }
+}
+
+// 新增：根据版本获取新功能描述
+function getNewFeaturesByVersion(version) {
+    const features = {
+        '1.1.0': [
+            '🤖 AI投资优化建议',
+            '📈 模拟历史记录',
+            '🔄 经济周期学习',
+            '💾 自动数据迁移'
+        ],
+        '1.0.0': [
+            '📚 理财知识学习',
+            '💹 投资模拟训练',
+            '⚡ 风险评估系统'
+        ]
+    };
+    
+    return features[version] || ['性能优化和问题修复'];
+}
+
+// 新增：检查新功能提示（即使版本未变）
+function checkNewFeatures() {
+    const lastVisit = localStorage.getItem('lastVisitVersion');
+    const currentTime = new Date().getTime();
+    
+    // 如果7天内没访问过，或者上次访问是旧版本，显示新功能提示
+    if (!lastVisit || (currentTime - parseInt(lastVisit) > 7 * 24 * 60 * 60 * 1000)) {
+        setTimeout(() => {
+            if (confirm('🎉 欢迎回到小财神理财！是否查看最新功能？')) {
+                showNewFeaturesTour();
+            }
+        }, 2000);
+    }
+    
+    localStorage.setItem('lastVisitVersion', currentTime.toString());
+}
+
+// 新增：新功能引导
+function showNewFeaturesTour() {
+    const features = getNewFeaturesByVersion(APP_VERSION);
+    
+    const tourHTML = `
+        <div id="newFeaturesTour" style="
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            z-index: 10001;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        ">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span style="font-size: 3em;">🎯</span>
+                <h2 style="color: #4a6491; margin: 10px 0;">发现新功能</h2>
+                <p>版本 ${APP_VERSION} 为您带来更好的体验</p>
+            </div>
+            
+            <div style="margin: 20px 0;">
+                ${features.map((feature, index) => `
+                    <div style="display: flex; align-items: center; padding: 10px; background: #f8f9fa; margin: 10px 0; border-radius: 10px;">
+                        <span style="font-size: 1.5em; margin-right: 15px;">${feature.split(' ')[0]}</span>
+                        <span>${feature}</span>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <button onclick="closeNewFeaturesTour()" style="
+                width: 100%; 
+                background: #4a6491; 
+                color: white; 
+                border: none; 
+                padding: 12px; 
+                border-radius: 10px; 
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: bold;
+            ">开始探索</button>
+        </div>
+        <div id="tourOverlay" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 10000;
+        "></div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', tourHTML);
+}
+
+// 新增：关闭新功能引导
+function closeNewFeaturesTour() {
+    const tour = document.getElementById('newFeaturesTour');
+    const overlay = document.getElementById('tourOverlay');
+    if (tour) tour.remove();
+    if (overlay) overlay.remove();
+}
+
 // 应用启动时立即检查版本
 checkDataVersion();
 
@@ -3128,3 +3335,4 @@ window.addEventListener('beforeunload', function() {
     localStorage.setItem('learningProgress', JSON.stringify(learningProgress));
 
 });
+
