@@ -1,11 +1,22 @@
 {
-  "name": "小财神理财学院",
-  "short_name": "小财神",
+  "name": "小财神投资理财学院",
+  "short_name": "小财神理财",
   "description": "财商教育学习应用 - 包含实战训练功能",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4a6491",
   "orientation": "portrait",
-  "icons": []
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
